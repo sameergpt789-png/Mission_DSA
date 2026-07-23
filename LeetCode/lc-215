@@ -1,25 +1,15 @@
 class Solution {
 public:
-    ListNode *detectCycle(ListNode *head) {
-        ListNode *slow = head;
-        ListNode *fast = head;
+    int findKthLargest(vector<int>& nums, int k) {
+        priority_queue<int, vector<int>, greater<int>> pq;
 
-        while (fast && fast->next) {
-            slow = slow->next;
-            fast = fast->next->next;
+        for (int num : nums) {
+            pq.push(num);
 
-            if (slow == fast) {
-                slow = head;
-
-                while (slow != fast) {
-                    slow = slow->next;
-                    fast = fast->next;
-                }
-
-                return slow;
-            }
+            if (pq.size() > k)
+                pq.pop();
         }
 
-        return nullptr;
+        return pq.top();
     }
 };
